@@ -1,0 +1,27 @@
+[
+  {
+    "Name": "Personal Loan",
+    "Description": "A loan for personal use with flexible terms.",
+    "InterestRate": 5.5
+  },
+  {
+    "Name": "Home Loan",
+    "Description": "A loan for purchasing or renovating a home.",
+    "InterestRate": 3.8
+  },
+  {
+    "Name": "Car Loan",
+    "Description": "A loan for buying a new or used car.",
+    "InterestRate": 7.2
+  },
+  {
+    "Name": "Education Loan",
+    "Description": "A loan to cover education expenses.",
+    "InterestRate": 4.5
+  },
+  {
+    "Name": "Business Loan",
+    "Description": "A loan for business purposes to support growth.",
+    "InterestRate": 6.0
+  }
+]
