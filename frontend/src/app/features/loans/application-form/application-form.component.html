@@ -1,0 +1,67 @@
+<mat-card appearance="outlined" class="mt-6 mx-auto p-6 max-w-6xl">
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+      <div class="flex flex-col lg:flex-row gap-6">
+        
+        <div class="flex flex-col gap-6 w-full lg:w-1/2">
+          <app-select-form-field
+            class="w-full"
+            label="Loan Type"
+            formControlName="loanType"
+            [items]="loanTypes" />
+  
+          <app-form-field
+            class="w-full"
+            label="Loan Amount $"
+            formControlName="amount"
+            type="number"
+            [min]="100"
+            [step]="100" />
+  
+          <app-date-form-field
+            class="w-full"
+            label="Start Date"
+            formControlName="startDate"
+            placeholder="Choose a date" />
+  
+          <app-form-field
+            class="w-full"
+            label="Loan Length (months)"
+            formControlName="loanTermInMonths"
+            placeholder="Enter loan length"
+            type="number"
+            [min]="1" />
+        </div>
+  
+        <div class="w-full lg:w-1/2">
+          <mat-card appearance="outlined" class="p-6 bg-gray-50 shadow-md rounded-md">
+            <mat-card-title class="text-xl font-semibold text-gray-800">Loan Summary</mat-card-title>
+            <mat-card-content class="mt-4">
+              <p class="mb-2 text-lg text-gray-700">
+                <strong>Monthly Payment:</strong> 
+                {{ monthlyPayment | currency: 'USD' }}
+              </p>
+              <p class="mb-2 text-lg text-gray-700">
+                <strong>Loan Duration:</strong> 
+                {{ loanTermInMonths }} months
+              </p>
+              <p class="mb-2 text-lg text-gray-700">
+                <strong>Interest Rate:</strong>
+                {{ loanType?.interestRate || 0 }}%
+              </p>
+            </mat-card-content>
+          </mat-card>
+          
+          <button
+            mat-raised-button
+            color="primary"
+            class="w-full mt-5 py-3 text-lg font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 transition duration-300"
+            type="submit"
+            [disabled]="form.invalid">
+            Apply for Loan
+          </button>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

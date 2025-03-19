@@ -1,0 +1,9 @@
+<mat-form-field appearance="outline" [class]="class">
+    <mat-label>{{label}}</mat-label>
+    <mat-select [formControl]="control">
+        <mat-option *ngFor="let item of items" [value]="item.value">
+            {{item.label}}
+        </mat-option>
+    </mat-select>
+    <mat-error [appValidationError]="control" class="text-danger"></mat-error>
+</mat-form-field>

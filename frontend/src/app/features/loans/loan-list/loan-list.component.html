@@ -1,0 +1,67 @@
+<div class="flex justify-between items-center mb-6">
+  <mat-form-field appearance="fill" class="w-full sm:w-auto">
+    <mat-label>Filter</mat-label>
+    <input matInput [(ngModel)]="searchTerm" (keyup)="onSearchChange()" #input />
+  </mat-form-field>
+
+  <button mat-raised-button color="primary"
+    routerLink="/loans/new-application"
+    class="ml-4 py-2 px-6 text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all duration-300">
+    Create New Application
+  </button>
+</div>
+
+<div class="mat-elevation-z8">
+  <table class="min-w-full table-auto bg-white shadow-md rounded-lg">
+    <thead class="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+      <tr>
+        <th scope="col" class="px-4 py-2 border-b">#</th>
+        <th scope="col" class="px-4 py-2 border-b">Loan Type</th>
+        <th scope="col" class="px-4 py-2 border-b">Status</th>
+        <th scope="col" class="px-4 py-2 border-b">Amount</th>
+        <th scope="col" class="px-4 py-2 border-b">Interest Rate</th>
+        <th scope="col" class="px-4 py-2 border-b">Start Date</th>
+        <th scope="col" class="px-4 py-2 border-b">End Date</th>
+        <th scope="col" class="px-4 py-2 border-b"></th>
+      </tr>
+    </thead>
+    <tbody class="text-sm">
+      @for(loan of loans.items; track loan.id) {
+        <tr class="border-b hover:bg-gray-50">
+          <th scope="row" class="px-4 py-2">{{ loan.id }}</th>
+          <td class="px-4 py-2">{{ loan.loanType.name }}</td>
+          <td class="px-4 py-2">{{ statusText(loan.status) }}</td>
+          <td class="px-4 py-2">{{ loan.amount | currency: 'USD' }}</td>
+          <td class="px-4 py-2">{{ loan.interestRate }}%</td>
+          <td class="px-4 py-2">{{ loan.startDate | dateFormat }}</td>
+          <td class="px-4 py-2">{{ loan.endDate | dateFormat }}</td>
+          <td class="px-4 py-2">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="text-gray-600 hover:text-gray-800">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item [routerLink]="['/loans', loan.id]">
+                <mat-icon>dialpad</mat-icon>
+                <span>Details</span>
+              </button>
+            </mat-menu>
+          </td>
+        </tr>
+      }
+      @empty {
+        <tr>
+          <td colspan="8" class="text-center py-4 text-gray-500">No matching results found</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <mat-paginator
+    (page)="handlePageEvent($event)"
+    [length]="loans.totalCount"
+    [pageSize]="loans.pageSize"
+    [showFirstLastButtons]="true"
+    [pageIndex]="loans.pageNumber - 1"
+    aria-label="Select page"
+    class="mt-4" />
+</div>

@@ -1,0 +1,31 @@
+<h2 class="text-3xl font-semibold text-center my-6 text-gray-800">
+  New Payment
+</h2>
+
+<mat-card appearance="outlined" class="mt-4 mx-auto w-full max-w-2xl shadow-lg rounded-lg">
+  <mat-card-content>
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+      <app-form-field
+        class="w-full mb-6"
+        label="Loan Amount $"
+        formControlName="amount"
+        type="number"
+        [min]="100"
+        [step]="100" />
+
+      <app-select-form-field
+        class="w-full mb-6"
+        label="Payment Method"
+        formControlName="paymentMethod"
+        [items]="methods" />
+
+      <button mat-flat-button
+        [disabled]="form.invalid"
+        type="submit"
+        class="w-full py-3 mt-4 text-lg font-semibold bg-blue-600 text-white rounded-lg transition-colors duration-300 hover:bg-blue-700 disabled:opacity-50">
+        {{buttonText}}
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
