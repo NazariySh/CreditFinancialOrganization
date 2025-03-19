@@ -1,0 +1,39 @@
+<div class="w-full max-w-3xl mx-auto">
+  <h2 class="my-6 text-2xl font-semibold text-gray-800">
+    Create New Loan Type
+  </h2>
+  
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <input formControlName="id" hidden />
+  
+    <app-form-field
+      class="w-full mb-6"
+      label="Name"
+      formControlName="name"
+      inputClass="p-2 " />
+  
+    <app-form-field
+      class="w-full mb-6"
+      label="Interest Rate"
+      formControlName="interestRate"
+      inputClass="p-2"
+      type="number"
+      [min]="0"
+      [max]="100" />
+  
+    <app-textarea-form-field
+      class="w-full mb-6"
+      label="Description"
+      formControlName="description"
+      inputClass="p-2" />
+  
+    <button
+      mat-flat-button
+      color="primary"
+      class="w-full mt-5 py-3 text-lg font-semibold text-white bg-blue-600 rounded-md hover:bg-blue-700 disabled:opacity-50 transition duration-300"
+      type="submit"
+      [disabled]="form.invalid">
+      {{buttonText}}
+    </button>
+  </form>
+</div>

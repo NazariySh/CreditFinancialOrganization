@@ -1,0 +1,58 @@
+<h2 class="text-2xl font-semibold mb-6 text-gray-800">
+  Loan Type List
+</h2>
+
+<div class="flex justify-end items-center mb-6">
+  <button mat-raised-button
+    color="primary"
+    routerLink="/admin/loan-types/new"
+    class="px-6 py-3 text-lg">
+    New Loan Type
+  </button>
+</div>
+
+<div class="mat-elevation-z8 shadow-lg rounded-lg overflow-hidden">
+  <table class="min-w-full table-auto border-collapse bg-white">
+    <thead class="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+      <tr>
+        <th scope="col" class="px-6 py-4 text-center font-medium">#</th>
+        <th scope="col" class="px-6 py-4 font-medium">Name</th>
+        <th scope="col" class="px-6 py-4 font-medium">Interest Rate</th>
+        <th scope="col" class="px-6 py-4 font-medium">Description</th>
+        <th scope="col" class="px-6 py-4 text-center font-medium">Actions</th>
+      </tr>
+    </thead>
+    <tbody class="text-sm">
+      @for(type of loanTypes; track type.id) {
+        <tr class="border-t hover:bg-gray-50">
+          <th scope="row" class="px-6 py-4 text-center">{{ type.id }}</th>
+          <td class="px-6 py-4">{{ type.name }}</td>
+          <td class="px-6 py-4">{{ type.interestRate }}%</td>
+          <td class="px-6 py-4">{{ type.description }}</td>
+          <td class="px-6 py-4 text-center">
+            <button mat-icon-button [matMenuTriggerFor]="menu" class="text-gray-600 hover:text-gray-800">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item [routerLink]="['/admin/loan-types/edit', type.id]" class="text-gray-700 hover:bg-gray-100">
+                <mat-icon>edit</mat-icon>
+                <span>Update</span>
+              </button>
+              <button mat-menu-item (click)="deleteType(type.id)" class="text-gray-700 hover:bg-gray-100">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+        </tr>
+      }
+      @empty {
+        <tr>
+          <td colspan="5" class="text-center px-6 py-4 text-gray-500">
+            No matching results found
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

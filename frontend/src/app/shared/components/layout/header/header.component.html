@@ -1,0 +1,67 @@
+<header class="border-b shadow-md p-3 w-full max-h-20 fixed top-0 z-50 bg-white">
+    <div class="flex items-center justify-between max-w-screen-2xl mx-auto">
+        <img routerLink="/" src="/images/logo.png" alt="app logo" class="max-h-16 cursor-pointer">
+
+        @if (isLoggedIn && currentUser) {
+            <nav class="flex items-center text-2xl space-x-6">
+                <a routerLink="/loans"
+                    routerLinkActive="active"
+                    class="hover:text-blue-500">
+                    My loans
+                </a>
+    
+                <a *appIsEmployee
+                    routerLink="/employee/applications"
+                    routerLinkActive="active"
+                    class="hover:text-blue-500">
+                    Applications
+                </a>
+                <a *appIsAdmin
+                    routerLink="/admin/loan-types"
+                    routerLinkActive="active"
+                    class="hover:text-blue-500">
+                    Loan Types
+                </a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+                <button mat-button
+                    [matMenuTriggerFor]="menu"
+                    class="flex items-center space-x-2 text-xl">
+                  <mat-icon>arrow_drop_down</mat-icon>
+                  <span>{{ currentUser.email }}</span>
+                </button>
+      
+                <mat-menu #menu="matMenu" class="px-4">
+                  <button mat-menu-item
+                    routerLink="/profile"
+                    class="px-4">
+                    <mat-icon>account_circle</mat-icon>
+                    My Profile
+                  </button>
+                  <mat-divider></mat-divider>
+                  <button mat-menu-item
+                    (click)="logout()"
+                    class="px-4">
+                    <mat-icon>logout</mat-icon>
+                    Logout
+                  </button>
+                </mat-menu>
+            </div>
+        }
+        @else {
+            <div class="flex space-x-4">
+                <button mat-stroked-button
+                    routerLink="/auth/login"
+                    class="text-lg">
+                    Login
+                </button>
+                <button mat-stroked-button
+                    routerLink="/auth/register"
+                    class="text-lg">
+                    Register
+                </button>
+            </div>
+        }
+    </div>
+</header>

@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35527.113
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC2B72E4-2D8D-4221-8475-76941C855FB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.Domain", "backend\src\CreditFinancialOrganization.Domain\CreditFinancialOrganization.Domain.csproj", "{FE4513ED-0ED6-40F6-83CF-C2163C9224AE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.Application", "backend\src\CreditFinancialOrganization.Application\CreditFinancialOrganization.Application.csproj", "{6F4468FE-6854-475F-BFC8-EB6279E20276}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.Infrastructure", "backend\src\CreditFinancialOrganization.Infrastructure\CreditFinancialOrganization.Infrastructure.csproj", "{6048C163-B21B-4BA0-97ED-86DB1F064769}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.Api", "backend\src\CreditFinancialOrganization.Api\CreditFinancialOrganization.Api.csproj", "{1BF804C6-96A0-4299-8BBD-AD65D4B0AEE2}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{736B12CB-B2E4-40C7-B3D7-6254E26A2540}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.UnitTests", "tests\CreditFinancialOrganization.UnitTests\CreditFinancialOrganization.UnitTests.csproj", "{ED7C0D29-169C-43F0-9908-00F7D8BAD65F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE4513ED-0ED6-40F6-83CF-C2163C9224AE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE4513ED-0ED6-40F6-83CF-C2163C9224AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE4513ED-0ED6-40F6-83CF-C2163C9224AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE4513ED-0ED6-40F6-83CF-C2163C9224AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6F4468FE-6854-475F-BFC8-EB6279E20276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6F4468FE-6854-475F-BFC8-EB6279E20276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6F4468FE-6854-475F-BFC8-EB6279E20276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6F4468FE-6854-475F-BFC8-EB6279E20276}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6048C163-B21B-4BA0-97ED-86DB1F064769}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6048C163-B21B-4BA0-97ED-86DB1F064769}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6048C163-B21B-4BA0-97ED-86DB1F064769}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6048C163-B21B-4BA0-97ED-86DB1F064769}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BF804C6-96A0-4299-8BBD-AD65D4B0AEE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BF804C6-96A0-4299-8BBD-AD65D4B0AEE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BF804C6-96A0-4299-8BBD-AD65D4B0AEE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BF804C6-96A0-4299-8BBD-AD65D4B0AEE2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED7C0D29-169C-43F0-9908-00F7D8BAD65F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED7C0D29-169C-43F0-9908-00F7D8BAD65F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED7C0D29-169C-43F0-9908-00F7D8BAD65F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED7C0D29-169C-43F0-9908-00F7D8BAD65F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FE4513ED-0ED6-40F6-83CF-C2163C9224AE} = {BC2B72E4-2D8D-4221-8475-76941C855FB2}
+		{6F4468FE-6854-475F-BFC8-EB6279E20276} = {BC2B72E4-2D8D-4221-8475-76941C855FB2}
+		{6048C163-B21B-4BA0-97ED-86DB1F064769} = {BC2B72E4-2D8D-4221-8475-76941C855FB2}
+		{1BF804C6-96A0-4299-8BBD-AD65D4B0AEE2} = {BC2B72E4-2D8D-4221-8475-76941C855FB2}
+		{ED7C0D29-169C-43F0-9908-00F7D8BAD65F} = {736B12CB-B2E4-40C7-B3D7-6254E26A2540}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,76 @@
+<div class="mat-elevation-z8 shadow-lg rounded-lg overflow-hidden">
+  <table class="min-w-full table-auto border-collapse bg-white">
+    <thead class="bg-gray-100 text-left text-sm font-semibold text-gray-700">
+      <tr>
+        <th scope="col" class="px-6 py-3 border-b text-center">#</th>
+        <th scope="col" class="px-6 py-3 border-b">Date</th>
+        <th scope="col" class="px-6 py-3 border-b">Customer</th>
+        <th scope="col" class="px-6 py-3 border-b">Loan Type</th>
+        <th scope="col" class="px-6 py-3 border-b">Amount</th>
+        <th scope="col" class="px-6 py-3 border-b">Interest Rate</th>
+        <th scope="col" class="px-6 py-3 border-b">Start Date</th>
+        <th scope="col" class="px-6 py-3 border-b">End Date</th>
+        <th scope="col" class="px-6 py-3 border-b">Employee</th>
+        <th scope="col" class="px-6 py-3 border-b text-center"></th>
+      </tr>
+    </thead>
+    <tbody class="text-sm">
+      @for(application of applications.items; track application.id) {
+        <tr class="border-t hover:bg-gray-50">
+          <th scope="row" class="px-6 py-4 text-center">{{ application.id }}</th>
+          <td class="px-6 py-4">{{ application.date | dateFormat }}</td>
+          <td class="px-6 py-4">{{ application.loan.customer.email }}</td>
+          <td class="px-6 py-4">{{ application.loan.loanType.name }}</td>
+          <td class="px-6 py-4">{{ application.loan.amount | currency: 'USD' }}</td>
+          <td class="px-6 py-4">{{ application.loan.interestRate }}%</td>
+          <td class="px-6 py-4">{{ application.loan.startDate | dateFormat }}</td>
+          <td class="px-6 py-4">{{ application.loan.endDate | dateFormat }}</td>
+          <td class="px-6 py-4">{{ application.employee?.email }}</td>
+          <td class="px-6 py-4 text-center">
+            <button mat-icon-button
+              [matMenuTriggerFor]="menu"
+              class="text-gray-600 hover:text-gray-800">
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item
+                (click)="approveLoan(application.id)"
+                class="text-gray-700 hover:bg-gray-100">
+                <mat-icon>done_all</mat-icon>
+                <span>Approve</span>
+              </button>
+              <button mat-menu-item
+                (click)="rejectLoan(application.id)"
+                class="text-gray-700 hover:bg-gray-100">
+                <mat-icon>block</mat-icon>
+                <span>Reject</span>
+              </button>
+              <button mat-menu-item
+                (click)="deleteLoan(application.id, application.loan.customer.id)"
+                class="text-gray-700 hover:bg-gray-100">
+                <mat-icon>delete</mat-icon>
+                <span>Delete</span>
+              </button>
+            </mat-menu>
+          </td>
+        </tr>
+      }
+      @empty {
+        <tr>
+          <td colspan="10" class="text-center px-6 py-4 text-gray-500">
+            No matching results found
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <mat-paginator
+    (page)="handlePageEvent($event)"
+    [length]="applications.totalCount"
+    [pageSize]="applications.pageSize"
+    [showFirstLastButtons]="true"
+    [pageIndex]="applications.pageNumber - 1"
+    aria-label="Select page"
+    class="mt-4" />
+</div>

@@ -1,0 +1,10 @@
+<mat-form-field appearance="outline" [class]="class">
+    <mat-label>{{label}}</mat-label>
+    <textarea matInput
+        [formControl]="control"
+        [type]="type"
+        [placeholder]="placeholder"
+        [class]="inputClass">
+    </textarea>
+    <mat-error [appValidationError]="control" class="text-danger"></mat-error>
+</mat-form-field>

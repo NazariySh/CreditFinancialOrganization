@@ -1,0 +1,29 @@
+<mat-card class="max-w-lg mt-32 p-8 bg-white shadow-lg rounded-lg">
+  <h2 class="text-2xl font-semibold mb-4">User Profile</h2>
+
+  <mat-card-content *ngIf="user">
+    <div class="mb-4">
+      <p><strong class="font-bold text-gray-700">Name:</strong> {{ user.firstName }} {{ user.lastName }}</p>
+      <p><strong class="font-bold text-gray-700">Email:</strong> {{ user.email }}</p>
+      <p><strong class="font-bold text-gray-700">Phone:</strong> {{ user.phoneNumber }}</p>
+      <p><strong class="font-bold text-gray-700">Birth Date:</strong> {{ user.birthDate | dateFormat }}</p>
+    </div>
+    
+    <div *ngIf="user.address" class="mb-4">
+      <p><strong class="font-bold text-gray-700">Address:</strong></p>
+      <p>{{ user.address.line }}, {{ user.address.city }}, {{ user.address.state }}</p>
+      <p>{{ user.address.country }}, {{ user.address.postalCode }}</p>
+    </div>
+    
+    <p><strong class="font-bold text-gray-700">Roles:</strong> {{ user.roles.join(', ') }}</p>
+  </mat-card-content>
+
+  <mat-card-actions class="mt-4">
+    <button mat-raised-button
+      (click)="deleteProfile()"
+      class="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 flex items-center gap-2" >
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </mat-card-actions>
+</mat-card>

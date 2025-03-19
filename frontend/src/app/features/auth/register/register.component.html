@@ -1,0 +1,43 @@
+<mat-card class="max-w-lg mx-auto mt-32 p-8 bg-white">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div class="text-center mb-6">
+            <h1 class="text-3xl font-semibold text-primary">
+                Register
+            </h1>
+        </div>
+
+        <app-form-field
+            class="w-full mb-3"
+            label="First name"
+            formControlName="firstName" />
+
+        <app-form-field
+            class="w-full mb-3"
+            label="Last name"
+            formControlName="lastName" />
+
+        <app-form-field
+            class="w-full mb-3"
+            label="Email"
+            formControlName="email"
+            type="email" />
+
+        <app-form-field
+            class="w-full mb-3"
+            label="Phone"
+            formControlName="phoneNumber" />
+
+        <app-password-form-field
+            class="w-full mb-3"
+            label="Password"
+            formControlName="password" />
+
+        <button
+            [disabled]="form.invalid"
+            mat-flat-button 
+            type="submit" 
+            class="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+            Register
+        </button>
+    </form>
+</mat-card>
