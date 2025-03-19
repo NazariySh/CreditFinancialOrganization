@@ -120,7 +120,7 @@ public class AuthServiceTests
             null,
             null,
             true,
-            default), Times.Once);
+            CancellationToken.None), Times.Once);
     }
 
     [Fact]
@@ -196,7 +196,7 @@ public class AuthServiceTests
     {
         _validatorMock.Setup(p => p.ValidateAsync(
                 It.Is<ValidationContext<LoginDto>>(context => context.ThrowOnFailures),
-                default))
+                CancellationToken.None))
             .Throws(new ValidationException("error"));
     }
 
@@ -205,7 +205,7 @@ public class AuthServiceTests
         _unitOfWorkMock.Setup(p => p.Users.GetByEmailAsync(
                 It.IsAny<string>(),
                 It.IsAny<Func<IQueryable<User>, IIncludableQueryable<User, object>>>(),
-                default))
+                CancellationToken.None))
             .ReturnsAsync(user);
     }
 
@@ -216,7 +216,7 @@ public class AuthServiceTests
                 It.IsAny<string?>(),
                 It.IsAny<DateTime?>(),
                 populateExp,
-                default))
+                CancellationToken.None))
             .Returns(Task.CompletedTask);
     }
 

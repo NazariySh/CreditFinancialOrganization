@@ -4,11 +4,13 @@ using AutoMapper;
 using CreditFinancialOrganization.Application.DTOs.Payments;
 using CreditFinancialOrganization.Application.Services;
 using CreditFinancialOrganization.Domain.Entities.Payments;
+using CreditFinancialOrganization.Domain.Entities.Users;
 using CreditFinancialOrganization.Domain.Exceptions;
 using CreditFinancialOrganization.Domain.Models;
 using CreditFinancialOrganization.Domain.Repositories;
 using FluentAssertions;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 
 namespace CreditFinancialOrganization.UnitTests.Services;
@@ -167,7 +169,7 @@ public class PaymentServiceTests
     {
         _validatorMock.Setup(p => p.ValidateAsync(
                 It.Is<ValidationContext<PaymentCreateDto>>(context => context.ThrowOnFailures),
-                default))
+                CancellationToken.None))
             .Throws(new ValidationException("error"));
     }
 
@@ -182,8 +184,8 @@ public class PaymentServiceTests
     {
         _unitOfWorkMock.Setup(p => p.Payments.GetSingleAsync(
                 It.IsAny<Expression<Func<Payment, bool>>>(),
-                default,
-                default))
+                It.IsAny<Func<IQueryable<Payment>, IIncludableQueryable<Payment, object>>>(),
+                CancellationToken.None))
             .ReturnsAsync(payment);
     }
 
@@ -191,8 +193,8 @@ public class PaymentServiceTests
     {
         _unitOfWorkMock.Setup(p => p.Payments.GetAsync(
                 It.IsAny<Expression<Func<Payment, bool>>>(),
-                default,
-                default))
+                It.IsAny<Func<IQueryable<Payment>, IIncludableQueryable<Payment, object>>>(),
+                CancellationToken.None))
             .ReturnsAsync(payment);
     }
 
@@ -202,8 +204,8 @@ public class PaymentServiceTests
                 It.IsAny<int>(),
                 It.IsAny<int>(),
                 It.IsAny<Expression<Func<Payment, bool>>>(),
-                default,
-                default))
+                It.IsAny<Func<IQueryable<Payment>, IIncludableQueryable<Payment, object>>>(),
+                CancellationToken.None))
             .ReturnsAsync(payment);
     }
 

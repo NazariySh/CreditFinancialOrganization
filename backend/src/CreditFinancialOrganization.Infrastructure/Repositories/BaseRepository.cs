@@ -68,8 +68,8 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     {
         return await PagedList<TEntity>.CreateAsync(
             GetQueryable(predicate, include),
-            (ushort)pageNumber,
-            (ushort)pageSize,
+            pageNumber,
+            pageSize,
             cancellationToken);
     }
 

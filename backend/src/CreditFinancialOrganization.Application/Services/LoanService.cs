@@ -32,6 +32,7 @@ public class LoanService : ILoanService
 
         var loan = await _unitOfWork.Loans.GetSingleAsync(
             x => x.Id == id,
+            include: x => x.Include(l => l.Application),
             cancellationToken: cancellationToken)
             ?? throw new NotFoundException($"Loan with id {id} not found");
 
@@ -88,8 +89,7 @@ public class LoanService : ILoanService
             GetSearchFilter(search, userId),
             x => x
                 .Include(l => l.Customer)
-                .Include(l => l.LoanType)
-                .Include(l => l.Application),
+                .Include(l => l.LoanType),
             cancellationToken);
 
         return _mapper.Map<PagedList<LoanDto>>(loans);

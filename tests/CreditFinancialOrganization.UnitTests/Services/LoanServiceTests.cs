@@ -169,8 +169,8 @@ public class LoanServiceTests
     {
         _unitOfWorkMock.Setup(p => p.Loans.GetSingleAsync(
                 It.IsAny<Expression<Func<Loan, bool>>>(),
-                default,
-                default))
+                It.IsAny<Func<IQueryable<Loan>, IIncludableQueryable<Loan, object>>>(),
+                CancellationToken.None))
             .ReturnsAsync(loan);
     }
 
@@ -179,7 +179,7 @@ public class LoanServiceTests
         _unitOfWorkMock.Setup(p => p.Loans.GetAsync(
                 It.IsAny<Expression<Func<Loan, bool>>>(),
                 It.IsAny<Func<IQueryable<Loan>, IIncludableQueryable<Loan, object>>>(),
-                default))
+                CancellationToken.None))
             .ReturnsAsync(loan);
     }
 
@@ -190,7 +190,7 @@ public class LoanServiceTests
                 It.IsAny<int>(),
                 It.IsAny<Expression<Func<Loan, bool>>>(),
                 It.IsAny<Func<IQueryable<Loan>, IIncludableQueryable<Loan, object>>>(),
-                default))
+                CancellationToken.None))
             .ReturnsAsync(loans);
     }
 

@@ -28,7 +28,7 @@ public interface IRepository<TEntity> where TEntity : class
     Task<PagedList<TEntity>> GetAllAsync(
         int pageNumber,
         int pageSize,
-        Expression<Func<TEntity, bool>> predicate,
+        Expression<Func<TEntity, bool>>? predicate = default,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
         CancellationToken cancellationToken = default);
 

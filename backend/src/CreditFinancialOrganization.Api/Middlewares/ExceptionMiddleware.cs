@@ -32,7 +32,7 @@ public class ExceptionMiddleware : IMiddleware
 
     private Task HandleExceptionAsync(HttpContext context, Exception exception)
     {
-        _logger.LogError(exception, "An error occurred: {errorMessage}", exception.Message);
+        _logger.LogError(exception, "An error occurred: {ErrorMessage}", exception.Message);
 
         var statusCode = GetStatusCode(exception);
 

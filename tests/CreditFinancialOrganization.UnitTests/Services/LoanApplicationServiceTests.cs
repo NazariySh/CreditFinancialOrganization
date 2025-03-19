@@ -175,7 +175,7 @@ public class LoanApplicationServiceTests
                 It.IsAny<int>(),
                 It.IsAny<Expression<Func<LoanApplication, bool>>>(),
                 It.IsAny<Func<IQueryable<LoanApplication>, IIncludableQueryable<LoanApplication, object>>>(),
-                default))
+                CancellationToken.None))
             .ReturnsAsync(loanApplications);
     }
 

@@ -40,6 +40,6 @@ public class PagedList<T>
             .Take(pageSize)
             .ToListAsync(cancellationToken);
 
-        return new PagedList<T>(items, count, pageNumber, pageSize);
+        return new PagedList<T>(items, pageNumber, pageSize, count);
     }
 }

@@ -49,7 +49,7 @@ public class LoanTypesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<LoanTypeDto>> Create(
-        LoanTypeDto loanType,
+        LoanTypeCreateDto loanType,
         CancellationToken cancellationToken)
     {
         await _loanTypeService.CreateAsync(loanType, cancellationToken);
@@ -59,19 +59,19 @@ public class LoanTypesController : ControllerBase
 
     [Authorize(Roles = nameof(RoleType.Admin))]
     [HttpPut("admin/{id:guid}")]
-    [ProducesResponseType(typeof(LoanTypeDto), StatusCodes.Status201Created)]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     [ProducesResponseType(StatusCodes.Status422UnprocessableEntity)]
     public async Task<ActionResult<LoanTypeDto>> Update(
         Guid id,
-        LoanTypeDto loanType,
+        LoanTypeUpdateDto loanType,
         CancellationToken cancellationToken)
     {
         await _loanTypeService.UpdateAsync(id, loanType, cancellationToken);
 
-        return CreatedAtAction(nameof(GetById), new { id = loanType.Id }, loanType);
+        return Ok();
     }
 
     [Authorize(Roles = nameof(RoleType.Admin))]

@@ -10,6 +10,7 @@ using CreditFinancialOrganization.Domain.Repositories;
 using FluentAssertions;
 using FluentValidation;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 
 namespace CreditFinancialOrganization.UnitTests.Services;
@@ -290,7 +291,7 @@ public class UserServiceTests
     {
         _validatorMock.Setup(p => p.ValidateAsync(
                 It.Is<ValidationContext<RegisterDto>>(context => context.ThrowOnFailures),
-                default))
+                CancellationToken.None))
             .Throws(new ValidationException("error"));
     }
 
@@ -298,7 +299,7 @@ public class UserServiceTests
     {
         _addressValidatorMock.Setup(p => p.ValidateAsync(
                 It.Is<ValidationContext<AddressDto>>(context => context.ThrowOnFailures),
-                default))
+                CancellationToken.None))
             .Throws(new ValidationException("error"));
     }
 
@@ -306,7 +307,7 @@ public class UserServiceTests
     {
         _unitOfWorkMock.Setup(u => u.Users.IsEmailUniqueAsync(
                 It.IsAny<string>(),
-                default))
+                CancellationToken.None))
             .ReturnsAsync(result);
     }
 
@@ -321,8 +322,8 @@ public class UserServiceTests
     {
         _unitOfWorkMock.Setup(u => u.Users.GetSingleAsync(
                 It.IsAny<Expression<Func<User, bool>>>(),
-                default,
-                default))
+                It.IsAny<Func<IQueryable<User>, IIncludableQueryable<User, object>>>(),
+                CancellationToken.None))
             .ReturnsAsync(user);
     }
 
@@ -330,7 +331,7 @@ public class UserServiceTests
     {
         _unitOfWorkMock.Setup(u => u.Addresses.AnyAsync(
                 It.IsAny<Expression<Func<Address, bool>>>(),
-                default))
+                CancellationToken.None))
             .ReturnsAsync(result);
     }
 
@@ -394,13 +395,6 @@ public class UserServiceTests
                 It.IsAny<User>()))
             .ReturnsAsync([]);
     }
-
-    //private void SetupMockUserManagerFindById(User? user)
-    //{
-    //    _userManagerMock.Setup(u => u.FindByIdAsync(
-    //            It.IsAny<string>()))
-    //        .ReturnsAsync(user);
-    //}
 
     private static AddressDto GetAddressDto(Address address)
     {

@@ -8,6 +8,10 @@ public class LoanTypeProfile : Profile
 {
     public LoanTypeProfile()
     {
-        CreateMap<LoanType, LoanTypeDto>().ReverseMap();
+        CreateMap<LoanType, LoanTypeDto>();
+
+        CreateMap<LoanTypeCreateDto, LoanType>();
+
+        CreateMap<LoanTypeUpdateDto, LoanType>();
     }
 }

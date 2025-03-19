@@ -12,23 +12,26 @@ public class LoanTypeService : ILoanTypeService
 {
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
-    private readonly IValidator<LoanTypeDto> _validator;
+    private readonly IValidator<LoanTypeCreateDto> _createValidator;
+    private readonly IValidator<LoanTypeUpdateDto> _updateValidator;
 
     public LoanTypeService(
         IUnitOfWork unitOfWork,
         IMapper mapper,
-        IValidator<LoanTypeDto> validator)
+        IValidator<LoanTypeCreateDto> createValidator,
+        IValidator<LoanTypeUpdateDto> updateValidator)
     {
         _unitOfWork = unitOfWork ?? throw new ArgumentNullException(nameof(unitOfWork));
         _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
-        _validator = validator ?? throw new ArgumentNullException(nameof(validator));
+        _createValidator = createValidator ?? throw new ArgumentNullException(nameof(createValidator));
+        _updateValidator = updateValidator ?? throw new ArgumentNullException(nameof(updateValidator));
     }
 
-    public async Task CreateAsync(LoanTypeDto dto, CancellationToken cancellationToken = default)
+    public async Task CreateAsync(LoanTypeCreateDto dto, CancellationToken cancellationToken = default)
     {
         ArgumentNullException.ThrowIfNull(dto);
 
-        await _validator.ValidateAndThrowAsync(dto, cancellationToken);
+        await _createValidator.ValidateAndThrowAsync(dto, cancellationToken);
 
         if (await _unitOfWork.LoanTypes.AnyAsync(
                 x => x.Name == dto.Name,
@@ -43,7 +46,7 @@ public class LoanTypeService : ILoanTypeService
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task UpdateAsync(Guid id, LoanTypeDto dto, CancellationToken cancellationToken = default)
+    public async Task UpdateAsync(Guid id, LoanTypeUpdateDto dto, CancellationToken cancellationToken = default)
     {
         ArgumentEmptyException.ThrowIfEmpty(id);
         ArgumentNullException.ThrowIfNull(dto);
@@ -53,7 +56,7 @@ public class LoanTypeService : ILoanTypeService
             throw new ArgumentException("CustomerId does not match", nameof(id));
         }
 
-        await _validator.ValidateAndThrowAsync(dto, cancellationToken);
+        await _updateValidator.ValidateAndThrowAsync(dto, cancellationToken);
 
         var loanType = await _unitOfWork.LoanTypes.GetSingleAsync(
             x => x.Id == id,

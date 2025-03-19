@@ -4,10 +4,12 @@ using AutoMapper;
 using CreditFinancialOrganization.Application.DTOs.Loans;
 using CreditFinancialOrganization.Application.Services;
 using CreditFinancialOrganization.Domain.Entities.Loans;
+using CreditFinancialOrganization.Domain.Entities.Payments;
 using CreditFinancialOrganization.Domain.Exceptions;
 using CreditFinancialOrganization.Domain.Repositories;
 using FluentAssertions;
 using FluentValidation;
+using Microsoft.EntityFrameworkCore.Query;
 using Moq;
 
 namespace CreditFinancialOrganization.UnitTests.Services;
@@ -17,7 +19,8 @@ public class LoanTypeServiceTests
     private readonly Fixture _fixture;
     private readonly Mock<IUnitOfWork> _unitOfWorkMock;
     private readonly Mock<IMapper> _mapperMock;
-    private readonly Mock<IValidator<LoanTypeDto>> _validatorMock;
+    private readonly Mock<IValidator<LoanTypeCreateDto>> _createValidatorMock;
+    private readonly Mock<IValidator<LoanTypeUpdateDto>> _updateValidatorMock;
     private readonly LoanTypeService _loanTypeService;
 
     public LoanTypeServiceTests()
@@ -25,19 +28,21 @@ public class LoanTypeServiceTests
         _fixture = new Fixture();
         _unitOfWorkMock = new Mock<IUnitOfWork>();
         _mapperMock = new Mock<IMapper>();
-        _validatorMock = new Mock<IValidator<LoanTypeDto>>();
+        _createValidatorMock = new Mock<IValidator<LoanTypeCreateDto>>();
+        _updateValidatorMock = new Mock<IValidator<LoanTypeUpdateDto>>();
         _loanTypeService = new LoanTypeService(
             _unitOfWorkMock.Object,
             _mapperMock.Object,
-            _validatorMock.Object);
+            _createValidatorMock.Object,
+            _updateValidatorMock.Object);
     }
 
     [Fact]
     public async Task CreateAsync_Should_ThrowValidationException_WhenValidationFails()
     {
-        var loanTypeDto = _fixture.Create<LoanTypeDto>();
+        var loanTypeDto = _fixture.Create<LoanTypeCreateDto>();
 
-        SetupMockValidatorThrowsValidationException();
+        SetupMockCreateValidatorThrowsValidationException();
 
         var act = async () => await _loanTypeService.CreateAsync(loanTypeDto);
 
@@ -47,7 +52,7 @@ public class LoanTypeServiceTests
     [Fact]
     public async Task CreateAsync_Should_ThrowAlreadyExistsException_WhenLoanTypeAlreadyExists()
     {
-        var loanTypeDto = _fixture.Create<LoanTypeDto>();
+        var loanTypeDto = _fixture.Create<LoanTypeCreateDto>();
 
         SetupMockRepositoryIsUnique(false);
 
@@ -61,13 +66,17 @@ public class LoanTypeServiceTests
     public async Task CreateAsync_Should_NotThrowException_WhenValidRequest()
     {
         var loanType = _fixture.Create<LoanType>();
-        var loanTypeDto = GetLoanTypeDto(loanType);
+        var loanTypeCreate = _fixture.Build<LoanTypeCreateDto>()
+            .With(p => p.Name, loanType.Name)
+            .With(p => p.InterestRate, loanType.InterestRate)
+            .With(p => p.Description, loanType.Description)
+            .Create();
 
         SetupMockRepositoryIsUnique(true);
         SetupMockMapper(loanType);
         SetupMockRepositoryAdd(loanType);
 
-        var act = async () => await _loanTypeService.CreateAsync(loanTypeDto);
+        var act = async () => await _loanTypeService.CreateAsync(loanTypeCreate);
 
         await act.Should().NotThrowAsync();
     }
@@ -76,7 +85,7 @@ public class LoanTypeServiceTests
     public async Task UpdateAsync_Should_ThrowArgumentException_WhenIdDoesNotMatch()
     {
         var id = _fixture.Create<Guid>();
-        var loanTypeDto = _fixture.Create<LoanTypeDto>();
+        var loanTypeDto = _fixture.Create<LoanTypeUpdateDto>();
 
         var act = async () => await _loanTypeService.UpdateAsync(id, loanTypeDto);
 
@@ -86,10 +95,10 @@ public class LoanTypeServiceTests
     [Fact]
     public async Task UpdateAsync_Should_ThrowValidationException_WhenValidationFails()
     {
-        var loanTypeDto = _fixture.Create<LoanTypeDto>();
+        var loanTypeDto = _fixture.Create<LoanTypeUpdateDto>();
         var id = loanTypeDto.Id;
 
-        SetupMockValidatorThrowsValidationException();
+        SetupMockUpdateValidatorThrowsValidationException();
 
         var act = async () => await _loanTypeService.UpdateAsync(id, loanTypeDto);
 
@@ -99,7 +108,7 @@ public class LoanTypeServiceTests
     [Fact]
     public async Task UpdateAsync_Should_ThrowNotFoundException_WhenLoanTypeDoesNotExists()
     {
-        var loanTypeDto = _fixture.Create<LoanTypeDto>();
+        var loanTypeDto = _fixture.Create<LoanTypeUpdateDto>();
         var id = loanTypeDto.Id;
 
         SetupMockRepositoryGet(null);
@@ -113,12 +122,18 @@ public class LoanTypeServiceTests
     public async Task UpdateAsync_Should_ThrowAlreadyExistsException_WhenLoanTypeAlreadyExists()
     {
         var loanType = _fixture.Create<LoanType>();
+        var loanTypeUpdate = _fixture.Build<LoanTypeUpdateDto>()
+            .With(p => p.Id, loanType.Id)
+            .With(p => p.Name, loanType.Name)
+            .With(p => p.InterestRate, loanType.InterestRate)
+            .With(p => p.Description, loanType.Description)
+            .Create();
         var loanTypeDto = GetLoanTypeDto(loanType);
 
         SetupMockRepositoryGet(loanType);
         SetupMockRepositoryIsUnique(false);
 
-        var act = async () => await _loanTypeService.UpdateAsync(loanTypeDto.Id, loanTypeDto);
+        var act = async () => await _loanTypeService.UpdateAsync(loanTypeDto.Id, loanTypeUpdate);
 
         await act.Should().ThrowAsync<AlreadyExistsException>()
             .WithMessage($"Loan type with name {loanTypeDto.Name} already exists");
@@ -128,13 +143,19 @@ public class LoanTypeServiceTests
     public async Task UpdateAsync_Should_NotThrowException_WhenValidRequest()
     {
         var loanType = _fixture.Create<LoanType>();
+        var loanTypeUpdate = _fixture.Build<LoanTypeUpdateDto>()
+            .With(p => p.Id, loanType.Id)
+            .With(p => p.Name, loanType.Name)
+            .With(p => p.InterestRate, loanType.InterestRate)
+            .With(p => p.Description, loanType.Description)
+            .Create();
         var loanTypeDto = GetLoanTypeDto(loanType);
 
         SetupMockRepositoryGet(loanType);
         SetupMockRepositoryIsUnique(true);
         SetupMockMapper(loanType);
 
-        var act = async () => await _loanTypeService.UpdateAsync(loanTypeDto.Id, loanTypeDto);
+        var act = async () => await _loanTypeService.UpdateAsync(loanTypeDto.Id, loanTypeUpdate);
 
         await act.Should().NotThrowAsync();
     }
@@ -219,11 +240,19 @@ public class LoanTypeServiceTests
         result.Should().BeEquivalentTo(loanTypesDto);
     }
 
-    private void SetupMockValidatorThrowsValidationException()
+    private void SetupMockCreateValidatorThrowsValidationException()
     {
-        _validatorMock.Setup(p => p.ValidateAsync(
-                It.Is<ValidationContext<LoanTypeDto>>(context => context.ThrowOnFailures),
-                default))
+        _createValidatorMock.Setup(p => p.ValidateAsync(
+                It.Is<ValidationContext<LoanTypeCreateDto>>(context => context.ThrowOnFailures),
+                CancellationToken.None))
+            .Throws(new ValidationException("error"));
+    }
+
+    private void SetupMockUpdateValidatorThrowsValidationException()
+    {
+        _updateValidatorMock.Setup(p => p.ValidateAsync(
+                It.Is<ValidationContext<LoanTypeUpdateDto>>(context => context.ThrowOnFailures),
+                CancellationToken.None))
             .Throws(new ValidationException("error"));
     }
 
@@ -238,17 +267,17 @@ public class LoanTypeServiceTests
     {
         _unitOfWorkMock.Setup(p => p.LoanTypes.GetSingleAsync(
                 It.IsAny<Expression<Func<LoanType, bool>>>(),
-                default,
-                default))
+                It.IsAny<Func<IQueryable<LoanType>, IIncludableQueryable<LoanType, object>>>(),
+                CancellationToken.None))
             .ReturnsAsync(loanType);
     }
 
     private void SetupMockRepositoryGetAll(IReadOnlyList<LoanType> loanTypes)
     {
         _unitOfWorkMock.Setup(p => p.LoanTypes.GetAllAsync(
-                    default,
-                    default,
-                    default))
+                It.IsAny<Expression<Func<LoanType, bool>>>(),
+                It.IsAny<Func<IQueryable<LoanType>, IIncludableQueryable<LoanType, object>>>(),
+                CancellationToken.None))
             .ReturnsAsync(loanTypes);
     }
 
@@ -256,7 +285,7 @@ public class LoanTypeServiceTests
     {
         _unitOfWorkMock.Setup(p => p.LoanTypes.AnyAsync(
                 It.IsAny<Expression<Func<LoanType, bool>>>(),
-                default))
+                CancellationToken.None))
             .ReturnsAsync(!result);
     }
 

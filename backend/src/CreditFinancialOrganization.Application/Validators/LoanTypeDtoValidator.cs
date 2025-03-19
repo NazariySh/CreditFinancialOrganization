@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 
 namespace CreditFinancialOrganization.Application.Validators;
 
-public partial class LoanTypeDtoValidator : AbstractValidator<LoanTypeDto>
+public partial class LoanTypeDtoValidator : AbstractValidator<LoanTypeCreateDto>
 {
     public LoanTypeDtoValidator()
     {
