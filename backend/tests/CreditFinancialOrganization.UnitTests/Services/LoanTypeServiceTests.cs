@@ -4,7 +4,6 @@ using AutoMapper;
 using CreditFinancialOrganization.Application.DTOs.Loans;
 using CreditFinancialOrganization.Application.Services;
 using CreditFinancialOrganization.Domain.Entities.Loans;
-using CreditFinancialOrganization.Domain.Entities.Payments;
 using CreditFinancialOrganization.Domain.Exceptions;
 using CreditFinancialOrganization.Domain.Repositories;
 using FluentAssertions;

@@ -36,10 +36,9 @@ public class AuthService : IAuthService
 
         var user = await _unitOfWork.Users.GetByEmailAsync(
             loginDto.Email,
-            cancellationToken: cancellationToken)
-            ?? throw new ArgumentException("Invalid username/password");
+            cancellationToken: cancellationToken);
 
-        if (!await IsPasswordValidAsync(user, loginDto.Password))
+        if (user is null || !await IsPasswordValidAsync(user, loginDto.Password))
         {
             throw new ArgumentException("Invalid username/password");
         }

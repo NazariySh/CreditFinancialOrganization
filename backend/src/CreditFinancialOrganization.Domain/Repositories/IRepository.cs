@@ -12,24 +12,24 @@ public interface IRepository<TEntity> where TEntity : class
 
     Task<TEntity?> GetAsync(
         Expression<Func<TEntity, bool>> predicate,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default);
 
     Task<TEntity?> GetSingleAsync(
         Expression<Func<TEntity, bool>> predicate,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default);
 
     Task<IReadOnlyList<TEntity>> GetAllAsync(
-        Expression<Func<TEntity, bool>>? predicate = default,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default);
 
     Task<PagedList<TEntity>> GetAllAsync(
         int pageNumber,
         int pageSize,
-        Expression<Func<TEntity, bool>>? predicate = default,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default);
 
     Task<bool> AnyAsync(

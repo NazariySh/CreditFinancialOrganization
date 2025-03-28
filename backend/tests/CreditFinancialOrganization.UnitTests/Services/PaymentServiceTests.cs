@@ -1,10 +1,10 @@
 ﻿using System.Linq.Expressions;
 using AutoFixture;
 using AutoMapper;
+using CreditFinancialOrganization.Application.DTOs.Loans;
 using CreditFinancialOrganization.Application.DTOs.Payments;
 using CreditFinancialOrganization.Application.Services;
 using CreditFinancialOrganization.Domain.Entities.Payments;
-using CreditFinancialOrganization.Domain.Entities.Users;
 using CreditFinancialOrganization.Domain.Exceptions;
 using CreditFinancialOrganization.Domain.Models;
 using CreditFinancialOrganization.Domain.Repositories;
@@ -235,7 +235,15 @@ public class PaymentServiceTests
         return new PaymentDto
         {
             Id = payment.Id,
-            Loan = payment.Loan,
+            Loan = new LoanDto
+            {
+                Id = payment.Loan.Id,
+                Amount = payment.Loan.Amount,
+                InterestRate = payment.Loan.InterestRate,
+                StartDate = payment.Loan.StartDate,
+                EndDate = payment.Loan.EndDate,
+                Status = payment.Loan.Status
+            },
             Date = payment.Date,
             Amount = payment.Amount,
             Status = payment.Status,

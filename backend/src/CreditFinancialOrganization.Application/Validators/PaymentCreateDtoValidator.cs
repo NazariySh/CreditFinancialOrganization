@@ -5,6 +5,9 @@ namespace CreditFinancialOrganization.Application.Validators;
 
 public class PaymentCreateDtoValidator : AbstractValidator<PaymentCreateDto>
 {
+    public const int MinAmount = 100;
+    public const int MaxAmount = 1_000_000;
+
     public PaymentCreateDtoValidator()
     {
         RuleFor(x => x.LoanId)
@@ -12,7 +15,7 @@ public class PaymentCreateDtoValidator : AbstractValidator<PaymentCreateDto>
 
         RuleFor(x => x.Amount)
             .NotEmpty().WithMessage("Amount is required.")
-            .InclusiveBetween(100.00m, 1_000_000.00m).WithMessage("Amount must be between 100 and 1,000,000.");
+            .InclusiveBetween(MinAmount, MaxAmount).WithMessage($"Amount must be between {MinAmount} and {MaxAmount}.");
 
         RuleFor(x => x.PaymentMethod)
             .IsInEnum().WithMessage("Invalid payment method.");

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BC2B72E4-2D8D-4221-8475-76941C855FB2}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "backend\src", "{BC2B72E4-2D8D-4221-8475-76941C855FB2}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.Domain", "backend\src\CreditFinancialOrganization.Domain\CreditFinancialOrganization.Domain.csproj", "{FE4513ED-0ED6-40F6-83CF-C2163C9224AE}"
 EndProject
@@ -13,9 +13,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.Api", "backend\src\CreditFinancialOrganization.Api\CreditFinancialOrganization.Api.csproj", "{1BF804C6-96A0-4299-8BBD-AD65D4B0AEE2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{736B12CB-B2E4-40C7-B3D7-6254E26A2540}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "backend\tests", "{736B12CB-B2E4-40C7-B3D7-6254E26A2540}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.UnitTests", "tests\CreditFinancialOrganization.UnitTests\CreditFinancialOrganization.UnitTests.csproj", "{ED7C0D29-169C-43F0-9908-00F7D8BAD65F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditFinancialOrganization.UnitTests", "backend\tests\CreditFinancialOrganization.UnitTests\CreditFinancialOrganization.UnitTests.csproj", "{ED7C0D29-169C-43F0-9908-00F7D8BAD65F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -151,7 +151,7 @@ public class LoanServiceTests
                 .Select(loan => { loan.CustomerId = userId; return loan; })
                 .ToList())
             .Create();
-        var loanTypeName = loans.Items.First().LoanType.Name;
+        var loanTypeName = loans.Items[0].LoanType.Name;
         var filteredLoans = GetPagedListFilteredLoans(loans, loanTypeName);
         var loansDto = GetPagedListLoanDto(filteredLoans);
         

@@ -25,10 +25,6 @@ public class LoanProfile : Profile
                 dest => dest.LoanTypeId,
                 opt => opt.MapFrom(src => src.LoanType.Id));
 
-        //CreateMap<User, UserDto>();
-        //CreateMap<LoanType, LoanTypeDto>();
-        //CreateMap<LoanApplication, LoanApplicationDto>();
-
         CreateMap<PagedList<Loan>, PagedList<LoanDto>>();
     }
 }

@@ -5,11 +5,18 @@ namespace CreditFinancialOrganization.Application.Validators;
 
 public class LoanApplicationCreateDtoValidator : AbstractValidator<LoanApplicationCreateDto>
 {
+    public const int MinAmount = 100;
+    public const int MaxAmount = 1_000_000;
+    public const int MinInterestRate = 0;
+    public const int MaxInterestRate = 100;
+    public const int MinLoanTermInMonths = 1;
+    public const int MaxLoanTermInMonths = 360;
+
     public LoanApplicationCreateDtoValidator()
     {
         RuleFor(x => x.Amount)
             .NotEmpty().WithMessage("Amount is required.")
-            .InclusiveBetween(100.00m, 1_000_000.00m).WithMessage("Amount must be between 100 and 1,000,000.");
+            .InclusiveBetween(MinAmount, MaxAmount).WithMessage($"Amount must be between {MinAmount} and {MaxAmount}.");
 
         RuleFor(x => x.StartDate)
             .NotEmpty().WithMessage("Start date is required.")
@@ -20,11 +27,11 @@ public class LoanApplicationCreateDtoValidator : AbstractValidator<LoanApplicati
 
         RuleFor(x => x.InterestRate)
             .NotEmpty().WithMessage("Interest rate is required.")
-            .InclusiveBetween(0, 100).WithMessage("Interest rate must be between 0 and 100.");
+            .InclusiveBetween(MinInterestRate, MaxInterestRate).WithMessage($"Interest rate must be between {MinInterestRate} and {MaxInterestRate}.");
 
         RuleFor(x => x.LoanTermInMonths)
             .NotEmpty().WithMessage("Loan term in months is required.")
-            .InclusiveBetween(1, 360).WithMessage("Loan term must be between 1 and 360 months.");
+            .InclusiveBetween(MinLoanTermInMonths, MaxLoanTermInMonths).WithMessage($"Loan term must be between {MinLoanTermInMonths} and {MaxLoanTermInMonths} months.");
     }
 
     private static bool BeAValidStartDate(DateTime startDate)

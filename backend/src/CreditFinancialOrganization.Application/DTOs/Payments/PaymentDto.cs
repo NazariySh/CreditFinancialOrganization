@@ -1,4 +1,4 @@
-﻿using CreditFinancialOrganization.Domain.Entities.Loans;
+﻿using CreditFinancialOrganization.Application.DTOs.Loans;
 using CreditFinancialOrganization.Domain.Enums;
 
 namespace CreditFinancialOrganization.Application.DTOs.Payments;
@@ -6,7 +6,7 @@ namespace CreditFinancialOrganization.Application.DTOs.Payments;
 public class PaymentDto
 {
     public Guid Id { get; set; }
-    public Loan Loan { get; set; } = new();
+    public LoanDto Loan { get; set; } = new();
     public DateTime Date { get; set; }
     public decimal Amount { get; set; }
     public PaymentStatus Status { get; set; }

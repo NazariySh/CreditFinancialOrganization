@@ -20,11 +20,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Using Include="Xunit" />
+    <ProjectReference Include="..\..\src\CreditFinancialOrganization.Application\CreditFinancialOrganization.Application.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\backend\src\CreditFinancialOrganization.Application\CreditFinancialOrganization.Application.csproj" />
+    <Using Include="Xunit" />
   </ItemGroup>
 
 </Project>

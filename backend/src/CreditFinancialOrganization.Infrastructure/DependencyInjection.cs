@@ -22,21 +22,7 @@ public static class DependencyInjection
     {
         services.Configure<JwtSettings>(configuration.GetSection(nameof(JwtSettings)));
 
-        services.AddIdentity<User, IdentityRole<Guid>>(options =>
-            {
-                options.Password.RequireDigit = true;
-                options.Password.RequiredLength = 8;
-                options.Password.RequireUppercase = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.User.RequireUniqueEmail = true;
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-                options.Lockout.MaxFailedAccessAttempts = 5;
-                options.Lockout.AllowedForNewUsers = true;
-            })
-            .AddEntityFrameworkStores<ApplicationDbContext>()
-            .AddDefaultTokenProviders();
-
+        services.AddIdentity();
         services.AddAuthentication(configuration);
         services.AddAuthorization();
 
@@ -58,7 +44,25 @@ public static class DependencyInjection
         return services;
     }
 
-    public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
+    private static void AddIdentity(this IServiceCollection services)
+    {
+        services.AddIdentity<User, IdentityRole<Guid>>(options =>
+        {
+            options.Password.RequireDigit = true;
+            options.Password.RequiredLength = 8;
+            options.Password.RequireUppercase = true;
+            options.Password.RequireLowercase = true;
+            options.Password.RequireNonAlphanumeric = true;
+            options.User.RequireUniqueEmail = true;
+            options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
+            options.Lockout.MaxFailedAccessAttempts = 5;
+            options.Lockout.AllowedForNewUsers = true;
+        })
+            .AddEntityFrameworkStores<ApplicationDbContext>()
+            .AddDefaultTokenProviders();
+    }
+
+    private static void AddAuthentication(this IServiceCollection services, IConfiguration configuration)
     {
         var jwtSettings = configuration.GetSection(nameof(JwtSettings));
 
@@ -85,7 +89,5 @@ public static class DependencyInjection
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key))
             };
         });
-
-        return services;
     }
 }

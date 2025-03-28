@@ -34,7 +34,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity?> GetAsync(
         Expression<Func<TEntity, bool>> predicate,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default)
     {
         return await GetQueryable(predicate, include)
@@ -43,7 +43,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<TEntity?> GetSingleAsync(
         Expression<Func<TEntity, bool>> predicate,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default)
     {
         return await GetQueryable(predicate, include)
@@ -52,7 +52,7 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
 
     public async Task<IReadOnlyList<TEntity>> GetAllAsync(
         Expression<Func<TEntity, bool>>? predicate = null,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default)
     {
         return await GetQueryable(predicate, include)
@@ -62,8 +62,8 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     public async Task<PagedList<TEntity>> GetAllAsync(
         int pageNumber,
         int pageSize,
-        Expression<Func<TEntity, bool>>? predicate = default,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default,
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null,
         CancellationToken cancellationToken = default)
     {
         return await PagedList<TEntity>.CreateAsync(
@@ -82,8 +82,8 @@ public abstract class BaseRepository<TEntity> : IRepository<TEntity>
     }
 
     private IQueryable<TEntity> GetQueryable(
-        Expression<Func<TEntity, bool>>? predicate = default,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = default)
+        Expression<Func<TEntity, bool>>? predicate = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>>? include = null)
     {
         var query = DbContext.Set<TEntity>().AsNoTracking();
 

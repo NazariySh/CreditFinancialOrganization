@@ -29,8 +29,6 @@ public class PaymentProfile : Profile
                 dest => dest.Date,
                 opt => opt.MapFrom(src => DateTime.UtcNow));
 
-        //CreateMap<Loan, LoanDto>();
-
         CreateMap<PagedList<Payment>, PagedList<PaymentDto>>();
     }
 }

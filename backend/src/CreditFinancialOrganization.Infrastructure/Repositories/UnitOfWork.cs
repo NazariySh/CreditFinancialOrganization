@@ -1,7 +1,5 @@
-﻿using CreditFinancialOrganization.Domain.Entities.Users;
-using CreditFinancialOrganization.Domain.Repositories;
+﻿using CreditFinancialOrganization.Domain.Repositories;
 using CreditFinancialOrganization.Infrastructure.Data;
-using Microsoft.AspNetCore.Identity;
 
 namespace CreditFinancialOrganization.Infrastructure.Repositories;
 

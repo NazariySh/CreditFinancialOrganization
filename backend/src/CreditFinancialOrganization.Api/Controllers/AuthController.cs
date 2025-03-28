@@ -71,7 +71,7 @@ public class AuthController : ControllerBase
     {
         return Ok(new
         {
-            isAuthenticated = User.Identity?.IsAuthenticated ?? false
+            isAuthenticated = User.IsAuthenticated()
         });
     }
 

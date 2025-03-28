@@ -5,26 +5,32 @@ namespace CreditFinancialOrganization.Application.Validators;
 
 public class AddressDtoValidator : AbstractValidator<AddressDto>
 {
+    public const int MinLineLength = 200;
+    public const int MinCityLength = 100;
+    public const int MinStateLength = 100;
+    public const int MinCountryLength = 100;
+    public const int MinPostalCodeLength = 20;
+
     public AddressDtoValidator()
     {
         RuleFor(x => x.Line)
             .NotEmpty().WithMessage("Address Line is required.")
-            .MaximumLength(200).WithMessage("Address Line cannot exceed 200 characters.");
+            .MaximumLength(MinLineLength).WithMessage($"Address Line cannot exceed {MinLineLength} characters.");
 
         RuleFor(x => x.City)
             .NotEmpty().WithMessage("City is required.")
-            .MaximumLength(100).WithMessage("City cannot exceed 100 characters.");
+            .MaximumLength(MinCityLength).WithMessage($"City cannot exceed {MinCityLength} characters.");
 
         RuleFor(x => x.State)
             .NotEmpty().WithMessage("State is required.")
-            .MaximumLength(100).WithMessage("State cannot exceed 100 characters.");
+            .MaximumLength(MinStateLength).WithMessage($"State cannot exceed {MinStateLength} characters.");
 
         RuleFor(x => x.Country)
             .NotEmpty().WithMessage("Country is required.")
-            .MaximumLength(100).WithMessage("Country cannot exceed 100 characters.");
+            .MaximumLength(MinCountryLength).WithMessage($"Country cannot exceed {MinCountryLength} characters.");
 
         RuleFor(x => x.PostalCode)
             .NotEmpty().WithMessage("Postal Code is required.")
-            .MaximumLength(20).WithMessage("Postal Code cannot exceed 20 characters.");
+            .MaximumLength(MinPostalCodeLength).WithMessage($"Postal Code cannot exceed {MinPostalCodeLength} characters.");
     }
 }

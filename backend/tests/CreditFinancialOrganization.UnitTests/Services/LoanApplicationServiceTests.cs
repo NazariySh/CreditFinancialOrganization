@@ -135,7 +135,7 @@ public class LoanApplicationServiceTests
     {
         _validatorMock.Setup(p => p.ValidateAsync(
                 It.Is<ValidationContext<LoanApplicationCreateDto>>(context => context.ThrowOnFailures),
-                default))
+                CancellationToken.None))
             .Throws(new ValidationException("error"));
     }
 

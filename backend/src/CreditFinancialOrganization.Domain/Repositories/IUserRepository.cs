@@ -7,7 +7,7 @@ public interface IUserRepository : IRepository<User>
 {
     Task<User?> GetByEmailAsync(
         string email,
-        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = default,
+        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
         CancellationToken cancellationToken = default);
 
     Task<bool> IsEmailUniqueAsync(string email, CancellationToken cancellationToken = default);

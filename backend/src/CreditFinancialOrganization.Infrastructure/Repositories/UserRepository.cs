@@ -15,7 +15,7 @@ public class UserRepository : BaseRepository<User>, IUserRepository
 
     public Task<User?> GetByEmailAsync(
         string email,
-        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = default,
+        Func<IQueryable<User>, IIncludableQueryable<User, object>>? include = null,
         CancellationToken cancellationToken = default)
     {
         return GetSingleAsync(
